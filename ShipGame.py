@@ -1,6 +1,6 @@
 # imports
 import turtle
-# This following line may be redundant
+# This following line may have been redundant
 from turtle import Turtle
 
 wn = turtle.Screen()
