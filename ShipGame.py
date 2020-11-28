@@ -2,6 +2,7 @@
 import turtle
 # This following line may have been redundant
 from turtle import Turtle
+# Now let's start the project
 
 wn = turtle.Screen()
 wn.bgcolor("black")
