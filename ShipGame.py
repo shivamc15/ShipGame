@@ -68,11 +68,6 @@ def shoot_bullet():
         bulletIsFired = 1
         bullet1.setheading(direction)
         bullet1.showturtle()
-#        for i in range(100):
-#            wn.ontimer(bullet_timer(), 25)
-#        bullet1.hideturtle()
-#        bullet1.penup()
-#        bullet1.setpos(0, 0)
 
 
     direction = 270 + x
