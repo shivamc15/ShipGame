@@ -63,7 +63,8 @@ def turn_left():
 def touchbomber(bulletx,bullety):
     global bulletIsFired
     if bomber.distance(bulletx,bullety)<15:
-        bomber.hideturtle()
+        bomber.speed(0)
+        bomber.setpos(1000,900)
         bulletIsFired = 0
         bullet1.hideturtle()
         bullet1.penup()
@@ -73,10 +74,10 @@ def touchbomber(bulletx,bullety):
 def bullet_timer():
     global bulletIsFired
     global currentbulletpos
-    print("bullet timer called")
+#    print("bullet timer called")
     if bulletIsFired==1:
 
-        print("bullet is fired")
+        #print("bullet is fired")
         bullet1.forward(10)
         currentbulletpos = bullet1.pos()
         touchbomber(currentbulletpos[0],currentbulletpos[1])
