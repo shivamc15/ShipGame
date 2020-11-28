@@ -53,13 +53,13 @@ def turn_left():
 
 
 def bullet_timer():
-    print "bullet timer called"
+    print("bullet timer called")
     if (bulletIsFired):
-        print "bullet is fired"
+        print("bullet is fired")
         bullet1.forward(10)
         currentbulletpos = bullet1.pos()
-        print currentbulletpos[0]
-        print currentbulletpos[1]
+        print(currentbulletpos[0])
+        print(currentbulletpos[1])
     wn.ontimer(bullet_timer, bulletDelay)
 
 def shoot_bullet():
