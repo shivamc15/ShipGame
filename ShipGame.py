@@ -19,8 +19,7 @@ ship.shape("arrow")
 
 
 # Create Bullet State
-bulletx=0
-bullety=0
+
 bulletIsFired = 0
 bulletDelay = 50
 
@@ -33,9 +32,14 @@ bullet1.hideturtle()
 bullet1.penup()
 bullet1.color("blue")
 bullet1.shape("square")
-"""bomber=turtle.Turtle()
+
+#Create Bomber
+bomber=turtle.Turtle()
+bomber.speed(0)
+bomber.penup()
 bomber.color("green")
-bomber.shape("circle")"""
+bomber.shape("circle")
+bomber.setpos(300,300)
 
 
 def turn_right():
@@ -54,16 +58,29 @@ def turn_left():
     direction = direction + 5
     if direction < 0:
         x = 0 - direction
-#
+
+
+def touchbomber(bulletx,bullety):
+    global bulletIsFired
+    if bomber.distance(bulletx,bullety)<15:
+        bomber.hideturtle()
+        bulletIsFired = 0
+        bullet1.hideturtle()
+        bullet1.penup()
+        bullet1.setpos(0, 0)
 
 
 def bullet_timer():
     global bulletIsFired
+    global currentbulletpos
     print("bullet timer called")
     if bulletIsFired==1:
+
         print("bullet is fired")
         bullet1.forward(10)
         currentbulletpos = bullet1.pos()
+        touchbomber(currentbulletpos[0],currentbulletpos[1])
+
         if (isoutofbounds(currentbulletpos)):
             bulletIsFired = 0
             bullet1.hideturtle()
