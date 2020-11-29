@@ -11,19 +11,6 @@ delay=10
 linebuilder = turtle.Turtle()
 linebuilder.speed(0)
 linebuilder.hideturtle()
-linebuilder.pencolor("white")# imports
-import turtle
-# This following line may have been redundant
-from turtle import Turtle
-
-wn = turtle.Screen()
-wn.bgcolor("black")
-wn.setup(width=1000, height=800)
-delay=10
-#Creating Line where Bomber spawns
-linebuilder = turtle.Turtle()
-linebuilder.speed(0)
-linebuilder.hideturtle()
 linebuilder.pencolor("white")
 linebuilder.penup()
 linebuilder.setpos(-300, -300)
