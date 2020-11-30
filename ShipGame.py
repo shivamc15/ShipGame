@@ -1,13 +1,63 @@
 # imports
 import turtle
-# This following line may have been redundant
-from turtle import Turtle
-import ShipGameBomber
+import time
+import random
+#Creating a class for a bomber so we can create multiple similiar bombers
+class Bomber:
+
+    isVisible = 0
+    startingposx = 0
+    startingposy = 0
+    bturtle = 0
+
+    def __init__(self, posx, posy):
+        self.startingposx = posx
+        self.startingposy = posy
+        self.bturtle = turtle.Turtle()
+        self.bturtle.speed(0)
+        self.bturtle.penup()
+        self.bturtle.color("green")
+        self.bturtle.shape("circle")
+        self.bturtle.hideturtle()
+        # TODO: add code for turtle here
+
+    def makeactive(self):
+        self.isVisible = 1
+        self.bturtle.setpos(self.startingposx, self.startingposy)
+        angletoship = self.bturtle.towards(0, 0)
+        self.bturtle.setheading(angletoship)
+        self.bturtle.speed(2)
+        self.bturtle.showturtle()
+
+    def makeinactive(self):
+        self.isVisible = 0
+        self.bturtle.speed(0)
+        self.bturtle.setpos(self.startingposx, self.startingposy)
+        self.bturtle.hideturtle()
+
+    def moveforward(self):
+        if self.isVisible == 1:
+            self.bturtle.forward(3)
+
+    def istouchingBullet(self, bullet):
+        bulletpos = bullet.pos()
+        return self.bturtle.distance(bulletpos[0], bulletpos[1]) < 15
+
+    def ishittingship(self):
+        return self.bturtle.distance(0, 0) < 15
+
+starttime=round(time.time())
 
 wn = turtle.Screen()
 wn.bgcolor("black")
 wn.setup(width=1000, height=800)
+turtle.color("white")
+
+
 delay=10
+gameoverstate=0
+
+turtle.hideturtle()
 #Creating Line where Bomber spawns
 linebuilder = turtle.Turtle()
 linebuilder.speed(0)
@@ -32,7 +82,7 @@ ship.shape("arrow")
 # Create Bullet State
 
 bulletIsFired = 0
-bulletDelay = 3
+bulletDelay = 1
 
 # Create Bullet
 bullet1 = turtle.Turtle()
@@ -43,9 +93,17 @@ bullet1.color("orange")
 bullet1.shape("square")
 
 # Create Bomber
-bomber1 = ShipGameBomber.Bomber(300, 300)
+bomber1 = Bomber(300, 300)
 bomber1.makeactive()
-bomberlist = [bomber1]
+bomber2 = Bomber(0, 300)
+bomber2.makeactive()
+bomber3 = Bomber(-300, 300)
+bomber3.makeactive()
+bomber4 = Bomber(-300, -300)
+bomber4.makeactive()
+bomber5 = Bomber(300, 0)
+bomber5.makeactive()
+bomberlist = [bomber1,bomber2,bomber3,bomber4,bomber5]
 
 def turn_right():
     global direction
@@ -78,18 +136,40 @@ def touchbomber(bomber, bullet):
         bullet_reset()
         wn.ontimer(bomber.makeactive, 1000)
 
+
+
 def timer():
+    global gameoverstate
+    global starttime
     bullet_timer()
     bomber_timer()
-    wn.ontimer(timer, bulletDelay)
+    """currenttime=time.time()
+    if int(currenttime)-int(starttime)==100:
+        starttime=starttime+100"""
+    print("timer called")
+    #timetimer()
+    print("gameover value " + str(gameoverstate))
+    if gameoverstate==0:
+        print("setting up ontimer")
+        wn.ontimer(timer, bulletDelay)
+"""def timetimer():
+    global timecontral
+    timecontral = 0
+    timecontral += 1
+    turtle.hideturtle()
+    turtle.penup()
+    turtle.color("white")
 
-
+    style = ('Courier', 30, 'italic')
+    turtle.setpos(0, 350)
+    turtle.write(str(starttime), font=style, align='center')
+    turtle.hideturtle()"""
 def bomber_timer():
     global bomberlist
     for bomber in bomberlist:
         bomber.moveforward()
         if bomber.ishittingship():
-            turtleend()
+            gameover()
 
 
 def bullet_timer():
@@ -97,7 +177,7 @@ def bullet_timer():
     global bomberlist
 
     if bulletIsFired == 1:
-        bullet1.forward(10)
+        bullet1.forward(20)
         for bomber in bomberlist:
             touchbomber(bomber, bullet1)
 
@@ -128,13 +208,28 @@ def shoot_bullet():
     direction = 270 + x
 
 
-def turtleend():
+def gameover():
     global wn
-    print("Turtle end called")
+    global gameoverstate
+    gameoverstate=1
+    turtle.color("red")
+    style = ('Times', 30, 'italic')
+    turtle.penup()
+    turtle.hideturtle()
+    turtle.setpos(0,-350)
+    turtle.write('Game Over! Press Escape to Exit', font=style, align='center')
+    turtle.hideturtle()
+    turtle.onkey(None, "Right")
+    turtle.onkey(None, "Left")
+    turtle.onkey(None, "space")
+
+
+
+def turtleend():
     wn.bye()
 
-
 # Setup Turtle
+
 turtle.listen()
 turtle.onkey(turn_right, "Right")
 turtle.onkey(turn_left, "Left")
@@ -144,4 +239,3 @@ turtle.onkey(turtleend, "Escape")
 timer()
 
 turtle.mainloop()
-
