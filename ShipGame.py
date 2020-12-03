@@ -1,10 +1,11 @@
-
 # imports
 import turtle
 import time
 import random
 
 # Creating a class for a bomber so we can create multiple similiar bombers
+from multiprocessing.sharedctypes import synchronized
+
 turtle.pencolor("black")
 
 
@@ -41,7 +42,7 @@ class Bomber:
 
     def moveforward(self):
         if self.isVisible == 1:
-            self.bturtle.forward(2)
+            self.bturtle.forward(1)
 
     def istouchingBullet(self, bullet):
         bulletpos = bullet.pos()
@@ -158,15 +159,12 @@ def timer():
     bullet_timer()
     bomber_timer()
 
-    #("timer called")
+    # ("timer called")
     # timetimer()
-    #print("gameover value " + str(gameoverstate))
+    # print("gameover value " + str(gameoverstate))
     if gameoverstate == 0:
-        #print("setting up ontimer")
+        # print("setting up ontimer")
         wn.ontimer(timer, bulletDelay)
-
-
-
 
 
 def bombers_hittimer():
@@ -203,7 +201,7 @@ def bombers_hittimer():
     bombers_hitturtle.setpos(120, 330)
     bombers_hitturtle.pendown()
     bombers_hitturtle.write("Bombers Hit : " + str(bombers_hit), font=textfont, move=False)
-    #wn.ontimer(bombers_hittimer, 200)
+    # wn.ontimer(bombers_hittimer, 200)
 
 
 def bomber_timer():
@@ -243,7 +241,7 @@ def shoot_bullet():
     if bulletIsFired == 0:
         bulletIsFired = 1
         #        bullet1.setheading(direction)
-        #print(ship.heading())
+        # print(ship.heading())
         bullet1.setheading(ship.heading())
         bullet1.showturtle()
 
